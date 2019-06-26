@@ -1,7 +1,14 @@
 package com.godeltech.model.dao;
 
-import javax.transaction.Transactional;
+import com.godeltech.model.common.AbstractHibernateDao;
+import com.godeltech.model.dto.Rental;
+import org.springframework.stereotype.Repository;
 
-@Transactional
-public class RentalDao {
+@Repository
+public class RentalDao extends AbstractHibernateDao<Rental> {
+
+    public RentalDao() {
+        super();
+        setClazz(Rental.class);
+    }
 }

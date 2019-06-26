@@ -7,35 +7,43 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Location", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")})
 public class Location implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "countryCode", unique = false, nullable = false, length = 100)
+
+    @Column(name = "countryCode")
     private String countryCode;
-    @Column(name = "city", unique = false, nullable = false, length = 100)
+
+    @Column(name = "city")
     private String city;
-    @Column(name = "street", unique = false, nullable = false, length = 100)
+
+    @Column(name = "street")
     private String street;
-    @Column(name = "building", unique = false, nullable = false, length = 100)
+
+    @Column(name = "building")
     private String building;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Company> companies = new ArrayList<>();
 
     public Location() {
     }
 
-    public Location(Long id, String countryCode, String city, String street, String building) {
-        this.id = id;
+    public Location(String countryCode, String city, String street, String building) {
         this.countryCode = countryCode;
         this.city = city;
         this.street = street;
         this.building = building;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id")
-    private List<Company> companies = new ArrayList<>();
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
 
     public Long getId() {
         return id;

@@ -7,35 +7,52 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Car", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")})
 public class Car implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @Column(name = "manufactorer", unique = false, nullable = false, length = 100)
+
+    @Column(name = "manufactorer")
     private String manufactorer;
-    @Column(name = "model", unique = false, nullable = false, length = 100)
+
+    @Column(name = "model")
     private String model;
-    @Column(name = "year", unique = false, nullable = false, length = 100)
+
+    @Column(name = "year")
     private Integer year;
 
-    @ManyToOne
-    private Company company;
-
-    @OneToMany
-    @JoinColumn(name = "rental_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private List<Rental> rentals = new ArrayList<>();
 
-    public Car(Long id, String manufactorer, String model, Integer year) {
-        this.id = id;
-        this.manufactorer = manufactorer;
-        this.model = model;
-        this.year = year;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Company company;
 
     public Car() {
     }
+
+    public Car(String manufactorer, String model, Integer year, Company company) {
+        this.manufactorer = manufactorer;
+        this.model = model;
+        this.year = year;
+        this.company = company;
+    }
+
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
 
     public Long getId() {
         return id;
@@ -92,6 +109,7 @@ public class Car implements Serializable {
                 ", manufactorer='" + manufactorer + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
+                ", company=" + company +
                 '}';
     }
 }

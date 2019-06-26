@@ -2,12 +2,9 @@ package com.godeltech.config;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.assertj.core.util.Preconditions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -20,15 +17,9 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({"classpath:persistence-h2.properties"})
-@ComponentScan({ "com.godeltech.model" })
+@ComponentScan({ "com.godeltech.model.dto", "com.godeltech.model.dao" })
 @EnableJpaRepositories
 public class ApplicationConfig {
-
-    @Autowired
-    private Environment env;
-
-
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -41,14 +32,13 @@ public class ApplicationConfig {
     @Bean
     public DataSource dataSource() {
         final BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(Preconditions.checkNotNull(env.getProperty("jdbc.driverClassName")));
-        dataSource.setUrl(Preconditions.checkNotNull(env.getProperty("jdbc.url")));
-        dataSource.setUsername(Preconditions.checkNotNull(env.getProperty("jdbc.user")));
-        dataSource.setPassword(Preconditions.checkNotNull(env.getProperty("jdbc.pass")));
+        dataSource.setDriverClassName(Preconditions.checkNotNull("org.h2.Driver"));
+        dataSource.setUrl(Preconditions.checkNotNull("jdbc:h2:~/db;DB_CLOSE_DELAY=-1"));
+        dataSource.setUsername(Preconditions.checkNotNull("sa"));
+        dataSource.setPassword(Preconditions.checkNotNull("sa"));
 
         return dataSource;
     }
-
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
         final HibernateTransactionManager transactionManager = new HibernateTransactionManager();

@@ -1,8 +1,14 @@
 package com.godeltech.model.dao;
 
-import javax.transaction.Transactional;
+import com.godeltech.model.common.AbstractHibernateDao;
+import com.godeltech.model.dto.Location;
+import org.springframework.stereotype.Repository;
 
-@Transactional
+@Repository
+public class LocationDao extends AbstractHibernateDao<Location> {
 
-public class LocationDao {
+    public LocationDao() {
+        super();
+        setClazz(Location.class);
+    }
 }

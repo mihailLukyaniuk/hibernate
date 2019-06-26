@@ -1,48 +1,14 @@
 package com.godeltech.model.dao;
 
+import com.godeltech.model.common.AbstractHibernateDao;
 import com.godeltech.model.dto.Car;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-import java.util.List;
+@Repository
+public class CarDao extends AbstractHibernateDao<Car>{
 
-@Transactional
-public class CarDao implements Dao<Car, Long> {
-
-//    @Autowired
-//    private Session sessionFactory;
-
-
-    @Override
-    public void persist(Car entity) {
-//        try (Session session = sessionFactory.getSessionFactory().openSession()) {
-//            Transaction transaction = session.beginTransaction();
-//            session.saveOrUpdate(entity);
-//           transaction.commit();
-//        }
+    public CarDao() {
+        super();
+        setClazz(Car.class);
     }
-
-    @Override
-    public void update(Car entity) {
-    }
-
-    @Override
-    public Car findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public void delete(Car entity) {
-    }
-
-    @Override
-    public List<Car> findAll() {
-        return null;
-    }
-
-    @Override
-    public void deleteAll() {
-    }
-
-
 }

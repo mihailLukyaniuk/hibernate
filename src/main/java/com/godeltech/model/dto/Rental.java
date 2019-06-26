@@ -2,35 +2,52 @@ package com.godeltech.model.dto;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Rental", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")})
 public class Rental implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "startDateTime", unique = false, nullable = false, length = 100)
-    private Date startDateTime;
-    @Column(name = "endDateTime", unique = false, nullable = false, length = 100)
-    private Date endDateTime;
+
+    @Column(name = "startDateTime")
+    private LocalDate startDateTime;
+
+    @Column(name = "endDateTime")
+    private LocalDate endDateTime;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Car car;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Customer customer;
 
     public Rental() {
     }
 
-    public Rental(Long id, Date startDateTime, Date endDateTime) {
-        this.id = id;
+    public Rental(LocalDate startDateTime, LocalDate endDateTime, Car car, Customer customer) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.car = car;
+        this.customer = customer;
     }
 
-    @ManyToOne
-    private Car car;
+    public Car getCar() {
+        return car;
+    }
 
-    @ManyToOne
-    private Customer customer;
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public Long getId() {
         return id;
@@ -40,19 +57,19 @@ public class Rental implements Serializable {
         this.id = id;
     }
 
-    public Date getStartDateTime() {
+    public LocalDate getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(Date startDateTime) {
+    public void setStartDateTime(LocalDate startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public Date getEndDateTime() {
+    public LocalDate getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
+    public void setEndDateTime(LocalDate endDateTime) {
         this.endDateTime = endDateTime;
     }
 
@@ -77,6 +94,8 @@ public class Rental implements Serializable {
                 "id=" + id +
                 ", startDateTime=" + startDateTime +
                 ", endDateTime=" + endDateTime +
+                ", car=" + car +
+                ", customer=" + customer +
                 '}';
     }
 }

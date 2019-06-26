@@ -7,32 +7,39 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Customer", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")})
 public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "login", unique = true, nullable = false, length = 100)
+
+    @Column(name = "login")
     private String login;
-    @Column(name = "firstName", unique = false, nullable = false, length = 100)
+
+    @Column(name = "firstName")
     private String firstName;
-    @Column(name = "lastName", unique = false, nullable = false, length = 100)
+
+    @Column(name = "lastName")
     private String lastName;
 
-    @OneToMany
-    @JoinColumn(name = "rental_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
     private List<Rental> rentals = new ArrayList<>();
-
 
     public Customer() {
     }
 
-    public Customer(Long id, String login, String firstName, String lastName) {
-        this.id = id;
+    public Customer(String login, String firstName, String lastName) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
     }
 
     public Long getId() {
@@ -43,11 +50,11 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public String getlogin() {
+    public String getLogin() {
         return login;
     }
 
-    public void setlogin(String login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 
@@ -82,6 +89,7 @@ public class Customer implements Serializable {
     public int hashCode() {
         return Objects.hash(id, login, firstName, lastName);
     }
+
 
     @Override
     public String toString() {

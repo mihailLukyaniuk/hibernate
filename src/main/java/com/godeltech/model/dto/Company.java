@@ -7,31 +7,44 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Company", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")})
 public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", unique = true, nullable = false, length = 100)
+
+    @Column(name = "name")
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Car> cars = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Location location;
 
     public Company() {
     }
 
-    public Company(Long id, String name) {
-        this.id = id;
-        name = name;
+    public Company(String name, Location location) {
+        this.name = name;
+        this.location = location;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id")
-    private List<Car> cars = new ArrayList<>();
+    public List<Car> getCars() {
+        return cars;
+    }
 
-    @ManyToOne
-    private Location location;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
-    private Car car;
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
 
     public Long getId() {
         return id;
@@ -67,7 +80,8 @@ public class Company implements Serializable {
     public String toString() {
         return "Company{" +
                 "id=" + id +
-                ", Name='" + name + '\'' +
+                ", name='" + name + '\'' +
+                ", location=" + location +
                 '}';
     }
 }
