@@ -20,14 +20,10 @@ public class AppMain {
         RentalDao rentalDao = context.getBean(RentalDao.class);
 
         //        Saving Customer in DB
-        Customer johnCustomer = customerDao.create(new Customer(
-                "John_Login", "John", "Snow"));
-        Customer mikeCustomer = customerDao.create(new Customer(
-                "Mike_Login", "Mike", "Lukyaniuk"));
-        Customer hannaCustomer = customerDao.create(new Customer(
-                "Hanna_Login", "Hanna", "Karenina"));
-        Customer denisCustomer = customerDao.create(new Customer(
-                "Denis_Login", "Denis", "Nichipor"));
+        Customer johnCustomer = customerDao.create(new Customer("John_Login", "John", "Snow"));
+        Customer mikeCustomer = customerDao.create(new Customer(  "Mike_Login", "Mike", "Lukyaniuk"));
+        Customer hannaCustomer = customerDao.create(new Customer("Hanna_Login", "Hanna", "Karenina"));
+        Customer denisCustomer = customerDao.create(new Customer( "Denis_Login", "Denis", "Nichipor"));
 
         //        Saving Locations in DB
         Location minsk = locationDao.create(new Location(
@@ -60,14 +56,14 @@ public class AppMain {
                 new Car("BMW", "X7", 2018, thirdRentalCompany));
 
 //          Saving Rental in DB
-        rentalDao.create(new Rental(LocalDate.of(
-                2019, 6, 9), LocalDate.of(2019, 6, 12), renoCar, mikeCustomer));
-        rentalDao.create(new Rental(LocalDate.of(
-                2019, 6, 9), LocalDate.of(2019, 6, 12), fordCar, hannaCustomer));
-        rentalDao.create(new Rental(LocalDate.of(
-                2019, 6, 7), LocalDate.of(2019, 6, 10), hundaiCar, johnCustomer));
-        rentalDao.create(new Rental(LocalDate.of(
-                2019, 6, 7), LocalDate.of(2019, 1, 10), ladaCar, denisCustomer));
+        rentalDao.create(new Rental(LocalDate.of(2019, 6, 9),
+                LocalDate.of(2019, 6, 12), renoCar, mikeCustomer));
+        rentalDao.create(new Rental(LocalDate.of(2019, 6, 9),
+                LocalDate.of(2019, 6, 12), fordCar, hannaCustomer));
+        rentalDao.create(new Rental(LocalDate.of(2019, 6, 7),
+                LocalDate.of(2019, 6, 10), hundaiCar, johnCustomer));
+        rentalDao.create(new Rental(LocalDate.of(2019, 6, 7),
+                LocalDate.of(2019, 1, 10), ladaCar, denisCustomer));
 
         for (Car car : carDao.findAll()) {
             System.out.println(car);
