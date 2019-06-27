@@ -13,6 +13,7 @@ public class AppMain {
     public static void main(String[] args) {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
+
         LocationDao locationDao = context.getBean(LocationDao.class);
         CarDao carDao = context.getBean(CarDao.class);
         CompanyDao companyDao = context.getBean(CompanyDao.class);
@@ -20,16 +21,20 @@ public class AppMain {
         RentalDao rentalDao = context.getBean(RentalDao.class);
 
         //        Saving Customer in DB
-        Customer johnCustomer = customerDao.create(new Customer("John_Login", "John", "Snow"));
-        Customer mikeCustomer = customerDao.create(new Customer(  "Mike_Login", "Mike", "Lukyaniuk"));
-        Customer hannaCustomer = customerDao.create(new Customer("Hanna_Login", "Hanna", "Karenina"));
-        Customer denisCustomer = customerDao.create(new Customer( "Denis_Login", "Denis", "Nichipor"));
+        Customer johnCustomer = customerDao.create(
+                new Customer("John_Login", "John", "Snow"));
+        Customer mikeCustomer = customerDao.create(
+                new Customer(  "Mike_Login", "Mike", "Lukyaniuk"));
+        Customer hannaCustomer = customerDao.create(
+                new Customer("Hanna_Login", "Hanna", "Karenina"));
+        Customer denisCustomer = customerDao.create(
+                new Customer( "Denis_Login", "Denis", "Nichipor"));
 
         //        Saving Locations in DB
-        Location minsk = locationDao.create(new Location(
-                "Belarus", "Minsk", "Bogdanchuka", "221"));
-        Location brest = locationDao.create(new Location(
-                "Belarus", "Brest", "lefler", "11/7"));
+        Location minsk = locationDao.create(
+                new Location("Belarus", "Minsk", "Bogdanchuka", "221"));
+        Location brest = locationDao.create(
+                new Location("Belarus", "Brest", "lefler", "11/7"));
 
         //        Saving Companies in DB
         Company firstRentalCompany = companyDao.create(
