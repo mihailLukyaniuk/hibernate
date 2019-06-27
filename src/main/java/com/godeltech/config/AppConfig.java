@@ -19,14 +19,14 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan({ "com.godeltech.model.dto", "com.godeltech.model.dao" })
 @EnableJpaRepositories
-public class ApplicationConfig {
+public class AppConfig {
+
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(new String[] { "com.godeltech.model" });
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
     @Bean
@@ -36,7 +36,6 @@ public class ApplicationConfig {
         dataSource.setUrl(Preconditions.checkNotNull("jdbc:h2:~/db;DB_CLOSE_DELAY=-1"));
         dataSource.setUsername(Preconditions.checkNotNull("sa"));
         dataSource.setPassword(Preconditions.checkNotNull("sa"));
-
         return dataSource;
     }
     @Bean

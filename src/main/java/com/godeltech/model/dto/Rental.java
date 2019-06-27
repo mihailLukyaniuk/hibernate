@@ -17,10 +17,10 @@ public class Rental implements Serializable {
     @Column(name = "endDateTime")
     private LocalDate endDateTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Car.class, fetch = FetchType.EAGER)
     private Car car;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Customer.class , fetch = FetchType.EAGER)
     private Customer customer;
 
     public Rental() {

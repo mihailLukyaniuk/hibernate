@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.util.List;
 
-@SuppressWarnings("unchecked")
-public abstract class AbstractHibernateDao<T extends Serializable> extends AbstractDao<T> implements IOperations<T> {
+public abstract class AbstractHibernateDao<T extends Serializable> extends AbstractDao<T> implements Dao<T> {
 
     @Autowired
     protected SessionFactory sessionFactory;
-
-    // API
 
     @Override
     public T findOne(final long id) {
@@ -31,7 +28,8 @@ public abstract class AbstractHibernateDao<T extends Serializable> extends Abstr
     public List<T> findAll() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<T> list = session.createQuery("from " + clazz.getName()).getResultList();
+            List<T> list = session.createQuery(
+                    "from " + clazz.getName()).getResultList();
             session.getTransaction().commit();
             session.close();
             return list;
