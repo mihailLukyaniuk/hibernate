@@ -21,7 +21,7 @@
     </build>
     <properties>
         <source.encoding>UTF-8</source.encoding>
-        <spring.framework>5.1.5.RELEASE</spring.framework>
+        <spring.framework>5.2.22.RELEASE</spring.framework>
     </properties>
 
     <dependencies>
